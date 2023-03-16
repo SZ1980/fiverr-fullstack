@@ -1,3 +1,13 @@
-export const fn = (req, res) => {
-  res.send("from controllers!!!");
+import User from "../models/user.model.js";
+import jwt from "jsonwebtoken";
+
+export const deleteUser = async (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).send("Your Token Is Not Valid!");
+
+  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
+    res.send(payload);
+  });
+
+  // await User.findByIdAndDelete(req.params.id)
 };
